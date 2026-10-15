@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trình chiếu lớp học</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='presentation.css') }}">
+</head>
+<body>
+  <header>
+    <div><span class="eyebrow">LỚP HỌC TRỰC TIẾP</span><div id="session-title">Đang tải phiên kiểm tra…</div></div>
+    <button id="fullscreen" type="button">Toàn màn hình</button>
+  </header>
+  <main id="presentation" aria-live="polite"><p class="message">Đang kết nối…</p></main>
+  <footer><span id="connection" role="status">Đang kết nối…</span><span>Câu hỏi và số lượt trả lời tự động cập nhật</span></footer>
+  <script>const presentationSessionId = {{ session_id | tojson }};</script>
+  <script src="{{ url_for('static', filename='presentation.js') }}"></script>
+</body>
+</html>

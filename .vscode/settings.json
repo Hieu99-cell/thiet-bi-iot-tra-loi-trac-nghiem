@@ -1,0 +1,48 @@
+
+{
+  "C_Cpp.intelliSenseEngine": "default",
+  "cmake.cmakePath": "/usr/bin/cmake",
+  "idf.extensionActivationMode": "always",
+
+  "cmake.configureOnOpen": false,
+  "cmake.configureOnEdit": false,
+  "cmake.automaticReconfigure": false,
+  "cmake.autoSelectActiveFolder": false,
+
+  "cmake.options.advanced": {
+    "build": {
+      "statusBarVisibility": "inherit",
+      "inheritDefault": "hidden"
+    },
+    "launch": {
+      "statusBarVisibility": "inherit",
+      "inheritDefault": "hidden"
+    },
+    "debug": {
+      "statusBarVisibility": "inherit",
+      "inheritDefault": "hidden"
+    }
+  },
+
+  "idf.openOcdConfigs": [
+    "board/esp32-wrover-kit-3.3v.cfg"
+  ],
+
+  "idf.port": "detect",
+
+  "idf.customExtraVars": {
+    "IDF_PATH": "/home/hieu/.espressif/v6.1/esp-idf",
+    "IDF_TOOLS_PATH": "/home/hieu/.espressif",
+    "IDF_PYTHON_ENV_PATH": "/home/hieu/.espressif/python_env/idf6.1_py3.10_env",
+    "IDF_TARGET": "esp32"
+  },
+
+  "clangd.path": "/home/hieu/.espressif/tools/esp-clangd/esp-21.1.3_20260408/esp-clangd/bin/clangd",
+
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=/home/hieu/IOT/build"
+  ],
+  "idf.currentSetup": "/home/hieu/.espressif/v6.1/esp-idf"
+}
