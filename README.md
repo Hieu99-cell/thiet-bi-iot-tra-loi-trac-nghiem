@@ -1,15 +1,79 @@
 # THIẾT KẾ VÀ CHẾ TẠO THIẾT BỊ IOT TRẢ LỜI CÂU HỎI TRẮC NGHIỆM DÀNH CHO HỌC SINH, SINH VIÊN
 
-Hệ thống thiết bị trả lời trắc nghiệm sử dụng ESP32, bàn phím ma trận và màn hình OLED. Học sinh, sinh viên nhập mã số, chọn đáp án A–D và gửi kết quả qua Wi-Fi đến máy chủ. Giáo viên quản lý lớp học, bộ câu hỏi và theo dõi kết quả trên giao diện web tiếng Việt.
+**Thiết bị ESP32 kết hợp website quản lý lớp học, tổ chức trắc nghiệm và thống kê kết quả.**
 
-## Chức năng
+Dự án xây dựng một hệ thống tương tác trong lớp học: học sinh, sinh viên dùng thiết bị cầm tay để nhập mã số và chọn đáp án A–D; giáo viên sử dụng website để soạn câu hỏi, điều khiển buổi kiểm tra và theo dõi kết quả. Các câu trả lời được gửi qua Wi-Fi đến máy chủ và gắn với đúng phiên kiểm tra, câu hỏi đang mở.
 
-- Nhập mã số học sinh, sinh viên trên thiết bị.
-- Hiển thị trạng thái, số câu hỏi và đáp án trên OLED.
-- Gửi đáp án qua HTTP, đồng bộ phiên kiểm tra và trạng thái mở/khóa trả lời.
-- Quản lý lớp, danh sách sinh viên, bộ câu hỏi và phiên kiểm tra.
-- Trình chiếu câu hỏi, công bố đáp án và thống kê lựa chọn.
-- Xem điểm, tỷ lệ trả lời đúng; xuất báo cáo CSV và Excel.
+## Website quản lý trắc nghiệm
+
+Website là trung tâm điều hành của hệ thống. Giao diện tiếng Việt tổ chức theo bốn nhóm chính: **Tổng quan, Lớp học, Bài kiểm tra và Kết quả**. Giáo viên có thể chuẩn bị nội dung trước buổi học, mở phiên trực tiếp rồi xem báo cáo sau khi kết thúc.
+
+> Các ảnh website bên dưới được chụp từ ứng dụng đang chạy với dữ liệu minh họa. Mã `DEMO…` và tên “Sinh viên mẫu” dùng để giới thiệu chức năng.
+
+### 1. Tổng quan hệ thống
+
+Thống kê số lớp, bài kiểm tra, sinh viên và lượt trả lời. Phiên đang diễn ra được làm nổi bật, cho phép giáo viên truy cập nhanh màn hình điều khiển.
+
+![Trang tổng quan hệ thống](docs/images/website-tong-quan.png)
+
+### 2. Quản lý lớp học
+
+Mỗi lớp có mã lớp, tên, mô tả, số sinh viên và số bài kiểm tra. Giáo viên tạo lớp, mở danh sách và quản lý nội dung theo từng lớp học.
+
+![Danh sách lớp học](docs/images/website-lop-hoc.png)
+
+### 3. Danh sách sinh viên
+
+Thêm mã số và họ tên sinh viên, xem thành viên của từng lớp. Website cũng hỗ trợ ghi danh sinh viên khi thiết bị tham gia gửi đáp án theo logic của máy chủ.
+
+![Quản lý danh sách sinh viên](docs/images/website-sinh-vien.png)
+
+### 4. Soạn bài kiểm tra
+
+Tạo bài kiểm tra có tên, mô tả và nhiều câu hỏi. Mỗi câu gồm nội dung, bốn lựa chọn A–D và một đáp án đúng; có thể thêm, xóa câu và lưu lại để sử dụng trong buổi học.
+
+![Giao diện soạn câu hỏi trắc nghiệm](docs/images/website-soan-cau-hoi.png)
+
+### 5. Điều khiển phiên trực tiếp
+
+Hiển thị câu hiện tại, chuyển câu trước/sau và theo dõi đáp án gửi từ ESP32. Biểu đồ thể hiện phân bố lựa chọn A–D; các chỉ số cho biết số lượt trả lời, số đúng, số sai và tỷ lệ đúng. Giáo viên có thể công bố đáp án, khóa nhận trả lời và kết thúc phiên.
+
+![Điều khiển phiên kiểm tra trực tiếp](docs/images/website-truc-tiep.png)
+
+### 6. Trình chiếu cho lớp học
+
+Màn hình trình chiếu riêng hiển thị câu hỏi và bốn lựa chọn với chữ lớn. Đáp án đúng được ẩn trước khi công bố; giáo viên giữ màn hình quản lý trên máy cá nhân trong khi trình chiếu cho cả lớp.
+
+![Màn hình trình chiếu câu hỏi](docs/images/website-trinh-chieu.png)
+
+### 7. Kết quả và báo cáo
+
+Tổng hợp điểm theo thang 10, mức độ tham gia, số câu đúng/sai và câu chưa trả lời. Có bộ lọc mã sinh viên, mức độ trả lời, thống kê từng câu và chức năng xuất Excel/CSV để lưu trữ kết quả.
+
+![Báo cáo kết quả kiểm tra](docs/images/website-ket-qua.png)
+
+## Phần cứng thiết bị
+
+### Thiết bị thực tế
+
+Thiết bị sử dụng **ESP32**, **bàn phím ma trận 4×4** và **OLED**. Bàn phím phục vụ nhập mã số, chọn đáp án và xác nhận; OLED hiển thị trạng thái làm bài. Ảnh thực tế còn cho thấy bộ pin, mạch nguồn và cách bố trí các thành phần trong vỏ thiết bị.
+
+<p align="center"><img src="docs/images/phan-cung-thuc-te.jpg" alt="Thiết bị trả lời trắc nghiệm thực tế với ESP32, OLED và bàn phím 4×4" width="600"></p>
+
+### Thiết kế PCB
+
+Mô hình PCB thể hiện bố trí ESP32, màn hình OLED, đầu nối và các linh kiện trên bo mạch, phục vụ thiết kế và lắp ráp thiết bị.
+
+![Mô hình thiết kế PCB của thiết bị](docs/images/thiet-ke-pcb.png)
+
+## Quy trình hoạt động
+
+1. Giáo viên tạo lớp, nhập danh sách sinh viên và chuẩn bị bộ câu hỏi trên website.
+2. Bắt đầu phiên kiểm tra và mở màn hình trình chiếu nếu cần.
+3. Sinh viên nhập mã số trên thiết bị, nhấn `#` để xác nhận.
+4. Thiết bị đồng bộ câu hỏi đang mở; sinh viên chọn A–D và xác nhận theo hướng dẫn OLED.
+5. ESP32 gửi đáp án qua Wi-Fi; website cập nhật thống kê và danh sách trả lời.
+6. Giáo viên chuyển câu, công bố đáp án, kết thúc phiên và xuất báo cáo.
 
 ## Công nghệ
 
@@ -57,7 +121,7 @@ python server/server.py
 
 Mở `http://localhost:5000`. Máy chủ cần cơ sở dữ liệu phù hợp trước khi sử dụng. Xem [hướng dẫn máy chủ](server/README.md) về các phiên bản và migration. `migration_v2.sql` chỉ chạy một lần trên cấu trúc cũ; `migration_v3.sql` bổ sung chức năng trình chiếu. Sao lưu cơ sở dữ liệu trước khi nâng cấp.
 
-Các bản sao lưu cơ sở dữ liệu chứa mã sinh viên và lịch sử trả lời đã được loại khỏi bản công khai. Kho chỉ giữ các tập lệnh migration; cần chuẩn bị cơ sở dữ liệu riêng theo hướng dẫn máy chủ.
+
 
 ## Cấu hình và nạp ESP32
 
@@ -82,8 +146,3 @@ Thay `PORT` bằng cổng nối tiếp thực tế. ESP32 và máy chủ phải 
 4. Chọn đáp án A–D và thao tác xác nhận theo thông báo OLED.
 5. Giáo viên chuyển câu, công bố đáp án, kết thúc phiên và xuất kết quả.
 
-## Nội dung bản công khai
-
-Mã nguồn được lấy từ `IOT(1).zip`. Đã bỏ thư mục build, các môi trường Python và thư viện có thể cài lại; mật khẩu Wi-Fi/cơ sở dữ liệu được thay bằng cấu hình mẫu. Các thay đổi này cũng áp dụng cho `IOT.zip`.
-
-Kho này chứa mã nguồn; chưa xác minh build ESP-IDF, kết nối MariaDB hay hoạt động trên phần cứng trong môi trường đăng tải.
